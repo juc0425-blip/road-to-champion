@@ -1,11 +1,11 @@
 /* 관리자: 기록은 이 파일에서만 추가/수정합니다. 날짜는 KST YYYY-MM-DD. */
 window.ROAD_DATA = {
-  event: {name:'WINTER SCREEN', date:'2027-01-16', system:'골프존 NX 플러스', goal:3},
+  event: {name:'WINTER SCREEN', date:'2027-01-16', system:'골프존 NX 플러스', goal:2},
   players: [
-    {id:'lhj',name:'이호준',initial:17.8,photo:null},
+    {id:'lhj',name:'이호준',initial:7.1,photo:null},
     {id:'khs',name:'김형석',initial:2.8,photo:null},
-    {id:'pcb',name:'박창범',initial:18.0,photo:null},
-    {id:'cjw',name:'채정웅',initial:17.2,photo:null,aliases:['채이거웅즈']}
+    {id:'pcb',name:'박창범',initial:2.8,photo:null},
+    {id:'cjw',name:'채정웅',initial:8.0,photo:null,aliases:['채이거웅즈']}
   ],
   rivals: [
     {id:1,names:['이현수','이창민','한재진','김동현'],points:44.0,chance:'1% 미만'},
@@ -198,5 +198,5 @@ window.ROAD_DATA = {
   missions:[],
   // notices: {id,date,title,body}
   notices:[],
-  updatedAt:'2026-11-24T21:35:00+09:00'
+  updatedAt:'2026-11-24T21:45:17+09:00'
 };
