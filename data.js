@@ -11,7 +11,7 @@ window.ROAD_DATA = {
   players: [
     {id:'lhj',name:'이호준',initial:7.1,photo:null},
     {id:'khs',name:'김형석',initial:2.8,photo:null},
-    {id:'pcb',name:'박창범',initial:2.8,photo:null},
+    {id:'pcb',name:'박창범',initial:2.8,photo:null,aliases:['범람']},
     {id:'cjw',name:'채정웅',initial:8.0,photo:null,aliases:['채이거웅즈']}
   ],
   previousForecast: [
@@ -208,6 +208,83 @@ window.ROAD_DATA = {
     ],
     "puttTotal": 34,
     "photo": "proof/cjw-20261124.jpg"
+  },
+  {
+    "id": "pcb-20261125-2151",
+    "sessionId": "pcb-20261125-2151",
+    "player": "pcb",
+    "date": "2026-11-25",
+    "time": "21:51",
+    "type": "스크린 라운드",
+    "course": "레이크사이드 CC - 남",
+    "score": 83,
+    "par": 72,
+    "venue": "운양 한강신도시",
+    "tee": "White",
+    "distance": 6138,
+    "courseDifficulty": 4,
+    "greenDifficulty": 4,
+    "pars": [
+      4,
+      4,
+      3,
+      4,
+      4,
+      5,
+      3,
+      4,
+      5,
+      4,
+      5,
+      3,
+      4,
+      5,
+      3,
+      4,
+      4,
+      4
+    ],
+    "holeScores": [
+      4,
+      5,
+      3,
+      6,
+      4,
+      8,
+      5,
+      4,
+      4,
+      4,
+      5,
+      3,
+      4,
+      6,
+      4,
+      4,
+      6,
+      4
+    ],
+    "putts": [
+      1,
+      1,
+      2,
+      2,
+      1,
+      2,
+      2,
+      1,
+      1,
+      2,
+      2,
+      1,
+      1,
+      3,
+      2,
+      2,
+      2,
+      1
+    ],
+    "puttTotal": 29
   }
 ],
   // rounds: {id,player,date,course?,score,par?,note?,photo?,sessionId?}
@@ -233,5 +310,5 @@ window.ROAD_DATA = {
   missions:[],
   // notices: {id,date,title,body}
   notices:[],
-  updatedAt:'2026-11-24T21:45:17+09:00'
+  updatedAt:'2026-11-26T00:09:00+09:00'
 };
