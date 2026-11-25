@@ -5,12 +5,17 @@ function eventVenue(){return `<span class="event-venue"><b>${esc(D.event.venue)}
 function topThreeScenario({player,target,targetChance,high,highChance}) {
   return `${esc(name(player))}이 ${sign(target)} 이내면 3위 이내 확률은 ${targetChance}%, ${sign(high)}을 넘으면 ${highChance}%입니다.`;
 }
+// Older cached HTML can still load the latest scripts through their versioned URLs.
+const siteStylesheet = document.querySelector('link[rel="stylesheet"][href^="style.css"]');
+if (siteStylesheet && siteStylesheet.getAttribute('href') !== 'style.css?v=scorecard-1') {
+  siteStylesheet.href = 'style.css?v=scorecard-1';
+}
 function homeForecast() {
   const team = D.forecast.find(entry => entry.id === 4);
-  const {player,target,targetChance} = team.topThree;
+  const {player,target,targetChance,high,highChance} = team.topThree;
   const playerData = D.players.find(entry => entry.id === player);
   const latestRound = L.growth(D,playerData,now).series.at(-1);
-  let progress = '기준 파가 확인된 스크린 라운드가 등록되면 목표까지 남은 타수가 표시됩니다.';
+  let progress = '기록이 등록되면 목표까지 남은 타수가 표시됩니다.';
   if (latestRound) {
     const gap = latestRound.over - target;
     const status = gap > 0 ? `목표까지 ${gap}타` : '목표 달성';
@@ -27,12 +32,14 @@ function homeForecast() {
     </div>
     <div class="home-forecast-scenario">
       <div class="home-forecast-chance">
-        <strong>${targetChance}%</strong>
-        <span><b>3위 이내 확률</b><br>${esc(name(player))} ${sign(target)} 이내일 때</span>
+        <span>시뮬레이션 · 3위 이내 확률</span>
+        <div><strong>${targetChance}%</strong><b>${esc(name(player))} ${sign(target)} 이내일 때</b></div>
+        <small>${sign(high)} 초과 시 ${highChance}%</small>
       </div>
-      <p class="caption">시뮬레이션 조건 · ${topThreeScenario(team.topThree)}</p>
+    </div>
+    <div class="home-forecast-footer">
       <p class="home-forecast-progress">${progress}</p>
-      <a href="#analysis">전체 전력 분석 보기 →</a>
+      <a href="#analysis">전체 전력 분석 보기 <span aria-hidden="true">→</span></a>
     </div>
   </section>`;
 }
