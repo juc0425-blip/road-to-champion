@@ -284,7 +284,8 @@ window.ROAD_DATA = {
       2,
       1
     ],
-    "puttTotal": 29
+    "puttTotal": 29,
+    "photo": "proof/pcb-20261125.jpg"
   }
 ],
   // rounds: {id,player,date,course?,score,par?,note?,photo?,sessionId?}
