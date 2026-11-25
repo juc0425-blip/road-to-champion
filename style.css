@@ -26,8 +26,27 @@
 .forecast-report dd{margin:0;font-weight:700;white-space:nowrap}
 
 
-.home-forecast{background:#000;color:#fff;padding:clamp(17px,4vw,25px)}
-.home-forecast h2{font-size:clamp(20px,4vw,24px);margin:6px 0}
-.home-forecast p{margin:8px 0}
-.home-forecast .caption{color:#ddd}
-.home-forecast a{display:inline-block;margin-top:6px;color:inherit;text-decoration:underline;text-underline-offset:3px}
+.home-forecast{
+  --forecast-accent:#fff;
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);
+  gap:clamp(18px,4vw,44px);align-items:center;
+  margin:24px 0;padding:clamp(18px,4vw,38px);
+  border-top:5px solid #000;
+  background:#000;color:#fff;
+}
+.home-forecast h2{font-size:clamp(30px,5vw,54px);line-height:1.12;letter-spacing:-.07em;margin:8px 0 17px}
+.home-forecast-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0}
+.home-forecast-stats div{border-top:1px solid #666;padding-top:8px}
+.home-forecast-stats dt{color:#ddd;font-size:13px}
+.home-forecast-stats dd{margin:2px 0 0;font-size:clamp(24px,4vw,34px);font-weight:900}
+.home-forecast-chance{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:12px 14px;background:var(--forecast-accent);color:#101010}
+.home-forecast-chance strong{font-size:clamp(40px,7vw,64px);letter-spacing:-.07em;line-height:1}
+.home-forecast-chance span{font-size:14px}
+.home-forecast .caption{color:#e0e0e0;margin:10px 0}
+.home-forecast-progress{margin:10px 0 0}
+.home-forecast a{display:inline-flex;align-items:center;min-height:44px;margin-top:5px;color:var(--forecast-accent);text-decoration:underline;text-underline-offset:3px}
+.forecast-team.mine,.forecast-report.mine{box-shadow:inset 3px 0 #fff}
+.forecast-team.mine .forecast-fill:not(.previous){background:#fff}
+@media(max-width:640px){
+  .home-forecast{grid-template-columns:1fr;margin:18px 0}
+}

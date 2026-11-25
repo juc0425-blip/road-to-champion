@@ -7,7 +7,7 @@ function topThreeScenario({player,target,targetChance,high,highChance}) {
 }
 function homeForecast() {
   const team = D.forecast.find(entry => entry.id === 4);
-  const {player,target} = team.topThree;
+  const {player,target,targetChance} = team.topThree;
   const playerData = D.players.find(entry => entry.id === player);
   const latestRound = L.growth(D,playerData,now).series.at(-1);
   let progress = '기준 파가 확인된 스크린 라운드가 등록되면 목표까지 남은 타수가 표시됩니다.';
@@ -16,16 +16,27 @@ function homeForecast() {
     const status = gap > 0 ? `목표까지 ${gap}타` : '목표 달성';
     progress = `최근 등록 기록 ${sign(latestRound.over)} (${day(latestRound.date)}) · ${status}`;
   }
-  return `<section class="section"><div class="home-forecast">
-    <div class="eyebrow">TEAM 04 / FORECAST</div>
-    <h2>3위 이내 도전</h2>
-    <p>최근 스코어 기반 예상 ${team.rank}위 · 우승 확률 ${team.chance}%</p>
-    <p class="caption">시뮬레이션에서 ${topThreeScenario(team.topThree)}</p>
-    <p><b>${esc(name(player))} 목표 ${sign(target)} 이내</b><br>${progress}</p>
-    <a href="#analysis">전체 전력 분석 보기 →</a>
-  </div></section>`;
+  return `<section class="home-forecast" aria-labelledby="home-forecast-title">
+    <div class="home-forecast-lead">
+      <div class="eyebrow">TEAM 04 / FORECAST</div>
+      <h2 id="home-forecast-title">3위 이내 도전</h2>
+      <dl class="home-forecast-stats">
+        <div><dt>예상 순위</dt><dd>${team.rank}위</dd></div>
+        <div><dt>우승 확률</dt><dd>${team.chance}%</dd></div>
+      </dl>
+    </div>
+    <div class="home-forecast-scenario">
+      <div class="home-forecast-chance">
+        <strong>${targetChance}%</strong>
+        <span><b>3위 이내 확률</b><br>${esc(name(player))} ${sign(target)} 이내일 때</span>
+      </div>
+      <p class="caption">시뮬레이션 조건 · ${topThreeScenario(team.topThree)}</p>
+      <p class="home-forecast-progress">${progress}</p>
+      <a href="#analysis">전체 전력 분석 보기 →</a>
+    </div>
+  </section>`;
 }
-function home(){const d=L.dday(D.event.date,now);return `<section class="hero"><div><div class="eyebrow">TEAM APEX / TEAM 04</div><h1><span>ROAD TO</span><span>CHAMPION.</span></h1><p>한 번의 연습, 한 타의 변화.<br>우승을 향한 네 사람의 여정.</p></div><div class="countdown"><div class="eyebrow">WINTER SCREEN</div><div class="d">${d===0?'D-DAY':d>0?'D-'+d:'D+'+Math.abs(d)}</div><div class="date">2027.01.16 SAT</div><p>GOLFZON NX PLUS</p>${eventVenue()}</div></section><div class="strip">${metric('WEEKLY TRAINING',W.count+' / '+W.goal,'이번 주 팀 연습 횟수')}${metric('TEAM GOAL',num(W.rate)+'%','팀 목표 달성률')}${metric('LAST MATCH',latest?sign(latest.result.over):'—',latest?'Best 3 팀 오버파':'아직 기록 없음')}${metric('NEXT MATCH',next?day(next.date):'협의 중',next?esc(next.time||'시간 미정')+(next.venue?`<div style="font-weight:700;margin-top:3px;color:#000">${esc(next.venue)}</div>`:'')+(next.venueUrl?`<a href="${esc(next.venueUrl)}" target="_blank" rel="noopener" style="display:inline-block;text-decoration:underline;font-weight:700;margin-top:3px">지도 보기 ↗</a>`:''):'모의대회 일정',true)}</div>${section('01 / THE SQUAD','네 사람, 하나의 목표',roster(),'<a href="#training">연습 현황 보기</a>')}${homeForecast()}${section('02 / TEAM NEWS','팀 소식',`<div class="split"><div><h3>최근 활동</h3>${activity(R,5)}</div><div><h3>팀 공지</h3>${(D.notices||[]).length?D.notices.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(n=>`<div class="data-line"><div><b>${esc(n.title)}</b><div class="caption">${day(n.date)}</div><div>${esc(n.body)}</div></div></div>`).join(''):empty('등록된 공지가 없습니다.','새 공지는 확정 후 반영합니다.')}<h3>다음 팀 연습 / 모의대회</h3>${schedule(next)}</div></div>`)}`}
+function home(){const d=L.dday(D.event.date,now);return `<section class="hero"><div><div class="eyebrow">TEAM APEX / TEAM 04</div><h1><span>ROAD TO</span><span>CHAMPION.</span></h1><p>한 번의 연습, 한 타의 변화.<br>우승을 향한 네 사람의 여정.</p></div><div class="countdown"><div class="eyebrow">WINTER SCREEN</div><div class="d">${d===0?'D-DAY':d>0?'D-'+d:'D+'+Math.abs(d)}</div><div class="date">2027.01.16 SAT</div><p>GOLFZON NX PLUS</p>${eventVenue()}</div></section>${homeForecast()}<div class="strip">${metric('WEEKLY TRAINING',W.count+' / '+W.goal,'이번 주 팀 연습 횟수')}${metric('TEAM GOAL',num(W.rate)+'%','팀 목표 달성률')}${metric('LAST MATCH',latest?sign(latest.result.over):'—',latest?'Best 3 팀 오버파':'아직 기록 없음')}${metric('NEXT MATCH',next?day(next.date):'협의 중',next?esc(next.time||'시간 미정')+(next.venue?`<div style="font-weight:700;margin-top:3px;color:#000">${esc(next.venue)}</div>`:'')+(next.venueUrl?`<a href="${esc(next.venueUrl)}" target="_blank" rel="noopener" style="display:inline-block;text-decoration:underline;font-weight:700;margin-top:3px">지도 보기 ↗</a>`:''):'모의대회 일정',true)}</div>${section('01 / THE SQUAD','네 사람, 하나의 목표',roster(),'<a href="#training">연습 현황 보기</a>')}${section('02 / TEAM NEWS','팀 소식',`<div class="split"><div><h3>최근 활동</h3>${activity(R,5)}</div><div><h3>팀 공지</h3>${(D.notices||[]).length?D.notices.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(n=>`<div class="data-line"><div><b>${esc(n.title)}</b><div class="caption">${day(n.date)}</div><div>${esc(n.body)}</div></div></div>`).join(''):empty('등록된 공지가 없습니다.','새 공지는 확정 후 반영합니다.')}<h3>다음 팀 연습 / 모의대회</h3>${schedule(next)}</div></div>`)}`}
 function chart(series,title,unit=''){if(!series.length)return empty('기록 없음','데이터가 누적되면 그래프가 표시됩니다.');if(series.length===1)return `<div class="note">${esc(series[0].date)} · ${esc(title)} ${sign(series[0].value,1)}${unit} / 비교 기록 부족</div>`;const Wd=600,H=180,p=35,vals=series.map(s=>s.value),lo=Math.floor(Math.min(...vals)),hi=Math.ceil(Math.max(...vals));const range=hi-lo||1;const x=i=>p+i*(Wd-2*p)/(series.length-1),y=v=>H-p-(v-lo)*(H-2*p)/range;const ticks=Array.from({length:4},(_,i)=>lo+i*range/3);return `<svg class="chart" viewBox="0 0 ${Wd} ${H}" role="img" aria-label="${esc(title)} 변화 그래프">${ticks.map(t=>`<line x1="${p}" y1="${y(t)}" x2="${Wd-p}" y2="${y(t)}" stroke="#e5e5e5"/><text x="${p-5}" y="${y(t)+3}" text-anchor="end">${num(t,1)}</text>`).join('')}<polyline fill="none" stroke="#000" stroke-width="2.5" points="${series.map((s,i)=>`${x(i)},${y(s.value)}`).join(' ')}"/>${series.map((s,i)=>`<circle cx="${x(i)}" cy="${y(s.value)}" r="4" fill="#000"><title>${esc(s.date)}: ${s.value}${unit}</title></circle>${i===0||i===series.length-1||series.length<=6?`<text x="${x(i)}" y="${H-10}" text-anchor="middle">${esc(s.date.slice(5))}</text>`:''}`).join('')}</svg><div class="caption">${esc(title)} · ${esc(unit||'기록값')} · ${series.length}개 기록</div>`}
 function leaders(items,measure,eligible){const valid=items.filter(eligible);if(!valid.length)return '선정 보류';const max=Math.max(...valid.map(measure));return valid.filter(x=>Math.abs(measure(x)-max)<1e-8).map(x=>esc(x.name)).join(' · ')}
 function training(){const G=D.players.map(p=>({...p,g:L.growth(D,p,now)}));const weeklyRounds=R.filter(r=>r.date>=W.start&&r.date<=W.end&&r.type==='스크린 라운드'&&Number.isInteger(r.score));const growthEligible=G.filter(p=>p.g.improve!==null&&weeklyRounds.some(r=>r.player===p.id));const weeklyMatch=V.filter(m=>m.date>=W.start&&m.date<=W.end).at(-1);let mvp='선정 보류';if(weeklyMatch){mvp=leaders(D.players.map(p=>({...p,c:weeklyMatch.result.contribution[p.id]})),p=>p.c,()=>true)}return page('02 / TRAINING','TRAINING','연습을 쌓고, 변화는 숫자로 확인합니다.')+`<div class="strip">${metric('TEAM SESSIONS',W.count+'회',W.start+' ~ '+W.end)}${metric('WEEKLY TARGET',num(W.rate)+'%',W.goal+'회 목표')}${metric('ALL MEMBERS',W.allMet?'달성':'미달성','전원 개인 목표')}${metric('TOTAL SESSIONS',W.total+'회','누적 연습 횟수')}</div>`+section('01 / THIS WEEK','주간 연습',roster())+section('02 / PLAYER DEVELOPMENT','개인 성장',`<div class="growth">${G.map(p=>`<article class="growth-item"><h3>${esc(p.name)}</h3><div class="mini-grid"><div><span class="caption">최근 5회 평균 오버파</span><strong>${p.g.avg===null?'기록 부족':sign(p.g.avg,1)}</strong></div><div><span class="caption">초기 평균 대비 개선</span><strong>${p.g.improve===null?'기록 부족':sign(p.g.improve,1)+'타'}</strong></div><div><span class="caption">개인 최고 (오버파)</span><strong>${p.g.best?sign(p.g.best.over)+' / '+p.g.best.score+'타':'—'}</strong></div><div><span class="caption">누적 스크린 라운드</span><strong>${p.g.count}회</strong></div></div>${chart(p.g.series.map(r=>({date:r.date,value:r.over})),'오버파','타')}<p class="caption">초기 전력 분석 ${sign(p.initial,1)} · 파 확인 기록 ${p.g.validCount}회</p></article>`).join('')}</div><p class="caption">최근 5회 모두 기준 파가 확인된 경우에만 개선 폭을 계산합니다. 개선 폭이 양수이면 향상입니다.</p>`)+section('03 / HONORS','주간 명예의 전당',`<div class="honor"><div><span class="kicker">TRAINING LEADER</span><strong>${leaders(W.rows,p=>p.count,p=>p.count>0)}</strong><span class="caption">연습왕 · 이번 주 인증 횟수</span></div><div><span class="kicker">MOST IMPROVED</span><strong>${growthEligible.length>=2?leaders(growthEligible,p=>p.g.improve,p=>p.g.improve>0):'선정 보류'}</strong><span class="caption">성장왕 · 최근 5회 기준, 이번 주 라운드 참여</span></div><div><span class="kicker">TEAM MVP</span><strong>${mvp}</strong><span class="caption">이번 주 최근 모의대회 · Best 3 반영 비중</span></div></div><p class="caption">동률은 공동 선정합니다. 비교할 데이터가 부족하거나 해당 주 기록이 없으면 선정하지 않습니다.</p>`)+section('04 / TRAINING LOG','전체 연습 기록',activity(R))}
