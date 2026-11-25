@@ -22,3 +22,16 @@ for (const [personalGoal, teamGoal, teamRate, playerRate] of [
 console.log('PASS: individual and team weekly targets, including a changed target.');
 
 for(const r of production.training){assert.equal(r.holeScores.reduce((a,b)=>a+b,0),r.score);assert.equal(r.pars.reduce((a,b)=>a+b,0),r.par);assert.equal(r.putts.reduce((a,b)=>a+b,0),r.puttTotal)}assert.equal(production.matches[0].date,'2026-11-29');assert.equal(L.results(production,'2026-11-24').length,0);console.log('PASS: actual records, totals, schedule, no fabricated match result.');
+
+const {forecast, previousForecast} = production;
+assert.deepEqual(forecast.map(({id, rank, chance, points}) => [id, rank, chance, points]), [
+  [5, 1, 36, 65.9], [3, 2, 32, 65.2], [2, 3, 20, null],
+  [4, 4, 7, null], [1, 5, 4, null]
+]);
+assert.deepEqual(previousForecast.map(team => team.chance), ['1% 미만', '11%', '48%', '1% 미만', '40%']);
+assert.deepEqual(production.players.map(player => player.initial), [7.1, 2.8, 2.8, 8.0]);
+for (const team of forecast) {
+  assert.equal(team.scores.length, previousForecast.find(entry => entry.id === team.id).names.length);
+  for (const [low, high] of team.scores) assert.ok(Number.isInteger(low) && Number.isInteger(high) && low <= high);
+}
+console.log('PASS: current forecasts, withheld points, historical probabilities, initial averages, score ranges.');

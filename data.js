@@ -14,12 +14,40 @@ window.ROAD_DATA = {
     {id:'pcb',name:'박창범',initial:2.8,photo:null},
     {id:'cjw',name:'채정웅',initial:8.0,photo:null,aliases:['채이거웅즈']}
   ],
-  rivals: [
+  previousForecast: [
     {id:1,names:['이현수','이창민','한재진','김동현'],points:44.0,chance:'1% 미만'},
     {id:2,names:['백종진','이재영','경명수','이세종'],points:62.8,chance:'11%'},
     {id:3,names:['송대희','송수민','김광태','김동욱'],points:71.3,chance:'48%'},
     {id:4,names:['이호준','김형석','박창범','채정웅'],points:49.8,chance:'1% 미만'},
     {id:5,names:['문동진','장근엽','이재웅','오승환'],points:70.3,chance:'40%'}
+  ],
+  forecast: [
+    {
+      id:5, rank:1, chance:36, points:65.9, label:'우승 후보',
+      scores:[[3,7],[7,10],[4,6],[8,12]],
+      report:'네 선수 모두 최근 +12 이내다. 오승환도 절반 가까운 홀에서 Best 3에 반영돼 한 선수가 흔들려도 만회할 수 있다. 문동진이 +4 이내면 우승 확률은 44%다.'
+    },
+    {
+      id:3, rank:2, chance:32, points:65.2, label:'우승 후보',
+      scores:[[3,5],[1,7],[3,5],[20,28]],
+      report:'송대희·송수민·김광태의 상위 세 선수 타수만 보면 1위다. 김동욱의 점수가 반영되는 홀은 18%로 상위 세 선수의 비중이 크다. 송수민이 +3 이내면 우승 확률은 42%다.'
+    },
+    {
+      id:2, rank:3, chance:20, points:null, label:'다크호스',
+      scores:[[3,10],[-1,0],[5,10],[25,35]],
+      report:'이재영은 자료에서 유일하게 언더파가 가능한 선수다. 백종진과 경명수가 모두 +6 이내면 우승 확률은 36%, 둘 다 +8을 넘으면 8%로 변동 폭이 크다.'
+    },
+    {
+      id:4, rank:4, chance:7, points:null,
+      scores:[[10,20],[5,7],[5,10],[10,12]],
+      topThree:{player:'lhj', target:12, targetChance:56, high:17, highChance:31},
+      report:'김형석이 중심을 잡고 채정웅도 절반 넘는 홀에서 Best 3에 반영된다.'
+    },
+    {
+      id:1, rank:5, chance:4, points:null,
+      scores:[[3,7],[10,10],[2,7],[28,40]],
+      report:'이현수와 한재진이 상위권 전력을 이룬다. 세 번째 선수 이창민의 점수는 홀의 93%, 김동현은 13%에서 반영된다. 이창민이 +9 이내면 3위 이내 확률은 37%다.'
+    }
   ],
   prizes:[250000,150000,80000,50000,20000],
   // training: {id,player,date,type,minutes?,course?,score?,par?,note?,photo?,sessionId?}
