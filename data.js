@@ -1,6 +1,13 @@
 /* 관리자: 기록은 이 파일에서만 추가/수정합니다. 날짜는 KST YYYY-MM-DD. */
 window.ROAD_DATA = {
-  event: {name:'WINTER SCREEN', date:'2027-01-16', system:'골프존 NX 플러스', goal:2},
+  event: {
+    name:'WINTER SCREEN',
+    date:'2027-01-16',
+    system:'골프존 NX 플러스',
+    goal:2,
+    venue:'골프존파크 호계진선스크린점',
+    venueUrl:'https://map.naver.com/p/search/%EA%B3%A8%ED%94%84%EC%A1%B4%ED%8C%8C%ED%81%AC%20%ED%98%B8%EA%B3%84%EC%A7%84%EC%84%A0%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%A0%90'
+  },
   players: [
     {id:'lhj',name:'이호준',initial:7.1,photo:null},
     {id:'khs',name:'김형석',initial:2.8,photo:null},
